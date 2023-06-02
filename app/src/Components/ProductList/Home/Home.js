@@ -1,19 +1,35 @@
+import Filter from "../../Filters/Filter"
 import Cart from "../../ShoppingCart/Card/Cart"
 import Card from "../ProductCard/ProductCard"
 import { HomeStyle } from "./HomeStyle"
 
 
 function Home(props) {
-    const {cart, setCart, amount, setAmount, products} = props
-    
-    const addToCart = (id) => {
-        console.log(props.id)
-        const newProduct = cart.find((item) =>  item.id === id )
+    const { cart, setCart, amount, setAmount, products } = props
+
+    const addToCart = (product) => {
+        console.log(product)
+        const newProduct = cart.find((item) => item.id === product.id)
+        console.log(newProduct)
         if (newProduct === undefined) {
-            setCart([...Cart, { ...products, amount: 1, }])
+            setCart([...cart, { ...product, amount: 1 }])
+        } else {
+            const newCart = cart.map((item) => {
+                if (item.id === product.id) {
+                    console.log(item, product)
+                    return { ...item, amount: item.amount + 1 }
+
+                } else {
+                    return item
+                }
+            })
+            setCart(newCart)
         }
-        
+
     }
+    
+
+
     const renderList = products.map(rockets => {
         return (
             <Card
@@ -21,7 +37,8 @@ function Home(props) {
                 imgUrl={rockets.imgUrl}
                 name={rockets.name}
                 value={rockets.value}
-                addToCart = {addToCart}
+                addToCart={addToCart}
+
             />
         )
     })
