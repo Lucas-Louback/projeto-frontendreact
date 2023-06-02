@@ -1,11 +1,12 @@
 import { ItemsStyle } from "./ItemsStyle"
 
 function Items(props) {
-    const {name, value} = props
+    const {name, value, amount, deleteProductCart, id} = props
+    // console.log(props)
     return (
         <ItemsStyle>
-            <h3>nome: {name}</h3>
-            <h3>valor: {value}</h3>
+            <h4>nome: {name} / valor: {value} quantidade: {amount}</h4>
+            <button onClick={() => deleteProductCart(props) }>x</button>
         </ItemsStyle>
     )
 }
